@@ -27,31 +27,26 @@ echo [1/4] Setting up Backend...
 cd backend
 
 echo Checking if virtual environment exists...
-if not exist "venv\" (
+if not exist ".venv\" (
     echo Creating virtual environment...
-    python -m venv venv
+    python -m venv .venv
 )
 
 echo Activating virtual environment...
-call venv\Scripts\activate.bat
+call .venv\Scripts\activate.bat
 
 echo Installing backend dependencies...
 pip install -r requirements.txt --quiet
 
-echo Checking if database exists...
-if not exist "blood_bank.db" (
-    echo Seeding database with sample data...
-    python seed.py
-) else (
-    echo Database already exists. Skipping seed.
-)
+echo Setting up MySQL database...
+python setup_mysql.py >nul 2>&1
 
 echo.
 echo [2/4] Starting Backend Server...
 echo Backend will run at: http://localhost:8000
 echo API Docs will be at: http://localhost:8000/docs
 echo.
-start "BloodBridge Backend" cmd /k "cd /d %CD% && venv\Scripts\activate.bat && python main.py"
+start "BloodBridge Backend" cmd /k "cd /d %CD% && .venv\Scripts\activate.bat && uvicorn main:app --reload --port 8000"
 
 timeout /t 3 /nobreak >nul
 

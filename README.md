@@ -81,7 +81,7 @@ BloodBridge is a comprehensive blood donation management system that enables rea
 
 ### Backend
 - **Framework**: FastAPI (Python)
-- **Database**: SQLite with SQLModel ORM
+- **Database**: MySQL with SQLModel ORM
 - **Authentication**: JWT (JSON Web Tokens)
 - **WebSocket**: Real-time bidirectional communication
 - **ML Models**: scikit-learn (RandomForest, GradientBoosting)
@@ -96,7 +96,7 @@ BloodBridge is a comprehensive blood donation management system that enables rea
 - **Styling**: Custom CSS
 
 ### Key Libraries
-- **Backend**: `fastapi`, `sqlmodel`, `python-jose`, `passlib`, `scikit-learn`, `uvicorn`
+- **Backend**: `fastapi`, `sqlmodel`, `pymysql`, `python-jose`, `passlib`, `scikit-learn`, `uvicorn`
 - **Frontend**: `react`, `react-router-dom`, `zustand`, `react-leaflet`, `axios`
 
 ## 📁 Project Structure
@@ -173,20 +173,36 @@ BloodBridge/
    pip install -r requirements.txt
    ```
 
-3. **Frontend Setup**
+3. **MySQL Database Setup**
+   
+   Install MySQL Server if not already installed, then:
+   ```bash
+   cd backend
+   python setup_mysql_interactive.py
+   # Follow the prompts to configure your MySQL connection
+   ```
+
+4. **Frontend Setup**
    ```bash
    cd frontend
    npm install
    ```
 
-4. **Environment Configuration** (Optional)
+5. **Environment Configuration** (Optional)
    
-   Create `backend/.env` file:
+   Create `backend/.env` file (or copy from `.env.example`):
    ```env
-   DATABASE_URL=sqlite:///./blood_bank.db
+   # Application Settings
    SECRET_KEY=your-secret-key-here
    ALGORITHM=HS256
    ACCESS_TOKEN_EXPIRE_MINUTES=30
+   
+   # MySQL Database Configuration
+   DB_USER=root
+   DB_PASSWORD=your_mysql_password
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_NAME=bloodbridge
    ```
 
 ### Running the Application

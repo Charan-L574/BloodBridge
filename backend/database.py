@@ -1,8 +1,14 @@
 from sqlmodel import Session, create_engine, SQLModel
 from config import settings
 
-# Create database engine
-engine = create_engine(settings.DATABASE_URL, connect_args={"check_same_thread": False})
+# Create database engine for MySQL
+# Remove SQLite-specific connect_args
+engine = create_engine(
+    settings.DATABASE_URL,
+    echo=False,  # Set to True for SQL query logging
+    pool_pre_ping=True,  # Verify connections before using
+    pool_recycle=3600  # Recycle connections after 1 hour
+)
 
 
 def create_db_and_tables():
